@@ -5,7 +5,7 @@ import de.dvdgeisler.iot.dirigera.client.api.model.device.gateway.GatewayPersist
 import de.dvdgeisler.iot.dirigera.client.api.model.device.gateway.GatewayStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
@@ -34,7 +34,7 @@ public class ClientGatewayApi extends AbstractClientApi {
                         .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
-                        .onStatus(HttpStatus::isError, this::onError)
+                        .onStatus((HttpStatusCode::isError), this::onError)
                         .bodyToMono(GatewayStatus.class));
     }
 
@@ -46,7 +46,7 @@ public class ClientGatewayApi extends AbstractClientApi {
                         .uri(uri -> uri.path("ota/check").build())
                         .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
                         .retrieve()
-                        .onStatus(HttpStatus::isError, this::onError)
+                        .onStatus((HttpStatusCode::isError), this::onError)
                         .bodyToMono(Void.class));
     }
 
@@ -59,7 +59,7 @@ public class ClientGatewayApi extends AbstractClientApi {
                         .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
-                        .onStatus(HttpStatus::isError, this::onError)
+                        .onStatus((HttpStatusCode::isError), this::onError)
                         .bodyToMono(Void.class));
     }
 
@@ -77,7 +77,7 @@ public class ClientGatewayApi extends AbstractClientApi {
                         .bodyValue(environment)
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
-                        .onStatus(HttpStatus::isError, this::onError)
+                        .onStatus((HttpStatusCode::isError), this::onError)
                         .bodyToMono(Void.class));
     }
 
@@ -92,7 +92,7 @@ public class ClientGatewayApi extends AbstractClientApi {
                         .bodyValue(mode)
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
-                        .onStatus(HttpStatus::isError, this::onError)
+                        .onStatus((HttpStatusCode::isError), this::onError)
                         .bodyToMono(Void.class));
     }
 }

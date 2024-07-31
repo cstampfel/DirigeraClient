@@ -6,7 +6,7 @@ import de.dvdgeisler.iot.dirigera.client.api.model.deviceset.RoomAttributes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserters;
@@ -43,7 +43,7 @@ public class ClientRoomApi extends AbstractClientApi {
                                 .with("color", color))
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
-                        .onStatus(HttpStatus::isError, this::onError)
+                        .onStatus((HttpStatusCode::isError), this::onError)
                         .bodyToMono(Identifier.class));
     }
 
@@ -57,7 +57,7 @@ public class ClientRoomApi extends AbstractClientApi {
                         .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
-                        .onStatus(HttpStatus::isError, this::onError)
+                        .onStatus((HttpStatusCode::isError), this::onError)
                         .bodyToMono(Void.class));
     }
 
@@ -70,7 +70,7 @@ public class ClientRoomApi extends AbstractClientApi {
                         .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
-                        .onStatus(HttpStatus::isError, this::onError)
+                        .onStatus((HttpStatusCode::isError), this::onError)
                         .bodyToMono(new ParameterizedTypeReference<>() {
                         }));
     }
@@ -84,7 +84,7 @@ public class ClientRoomApi extends AbstractClientApi {
                         .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
-                        .onStatus(HttpStatus::isError, this::onError)
+                        .onStatus((HttpStatusCode::isError), this::onError)
                         .bodyToMono(Room.class));
     }
 
@@ -99,7 +99,7 @@ public class ClientRoomApi extends AbstractClientApi {
                         .bodyValue(attributes)
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
-                        .onStatus(HttpStatus::isError, this::onError)
+                        .onStatus((HttpStatusCode::isError), this::onError)
                         .bodyToMono(Void.class));
     }
 }

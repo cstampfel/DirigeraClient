@@ -6,7 +6,7 @@ import de.dvdgeisler.iot.dirigera.client.api.model.scene.SceneAttributes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriBuilder;
@@ -42,7 +42,7 @@ public class ClientSceneApi extends AbstractClientApi {
                         .bodyValue(attributes)
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
-                        .onStatus(HttpStatus::isError, this::onError)
+                        .onStatus((HttpStatusCode::isError), this::onError)
                         .bodyToMono(Identifier.class));
     }
 
@@ -55,7 +55,7 @@ public class ClientSceneApi extends AbstractClientApi {
                         .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
-                        .onStatus(HttpStatus::isError, this::onError)
+                        .onStatus((HttpStatusCode::isError), this::onError)
                         .bodyToMono(Void.class));
     }
 
@@ -68,7 +68,7 @@ public class ClientSceneApi extends AbstractClientApi {
                         .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
-                        .onStatus(HttpStatus::isError, this::onError)
+                        .onStatus((HttpStatusCode::isError), this::onError)
                         .bodyToMono(new ParameterizedTypeReference<List<Scene>>() {
                         }));
     }
@@ -82,7 +82,7 @@ public class ClientSceneApi extends AbstractClientApi {
                         .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
-                        .onStatus(HttpStatus::isError, this::onError)
+                        .onStatus((HttpStatusCode::isError), this::onError)
                         .bodyToMono(Scene.class));
     }
 
@@ -95,7 +95,7 @@ public class ClientSceneApi extends AbstractClientApi {
                         .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
-                        .onStatus(HttpStatus::isError, this::onError)
+                        .onStatus((HttpStatusCode::isError), this::onError)
                         .bodyToMono(Void.class));
     }
 
@@ -108,7 +108,7 @@ public class ClientSceneApi extends AbstractClientApi {
                         .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
-                        .onStatus(HttpStatus::isError, this::onError)
+                        .onStatus((HttpStatusCode::isError), this::onError)
                         .bodyToMono(Void.class));
     }
 
@@ -123,7 +123,7 @@ public class ClientSceneApi extends AbstractClientApi {
                         .bodyValue(attributes)
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
-                        .onStatus(HttpStatus::isError, this::onError)
+                        .onStatus((HttpStatusCode::isError), this::onError)
                         .bodyToMono(Void.class));
     }
 

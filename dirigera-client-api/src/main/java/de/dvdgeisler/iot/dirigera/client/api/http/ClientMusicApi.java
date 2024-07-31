@@ -3,7 +3,7 @@ package de.dvdgeisler.iot.dirigera.client.api.http;
 import de.dvdgeisler.iot.dirigera.client.api.model.music.Music;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriBuilder;
@@ -33,7 +33,7 @@ public class ClientMusicApi extends AbstractClientApi {
                         .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
-                        .onStatus(HttpStatus::isError, this::onError)
+                        .onStatus((HttpStatusCode::isError), this::onError)
                         .bodyToMono(Music.class));
     }
 }

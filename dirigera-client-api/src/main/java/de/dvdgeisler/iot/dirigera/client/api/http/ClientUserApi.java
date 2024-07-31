@@ -5,7 +5,7 @@ import de.dvdgeisler.iot.dirigera.client.api.model.user.UserName;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriBuilder;
@@ -36,7 +36,7 @@ public class ClientUserApi extends AbstractClientApi {
                         .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
-                        .onStatus(HttpStatus::isError, this::onError)
+                        .onStatus((HttpStatusCode::isError), this::onError)
                         .bodyToMono(Void.class));
     }
 
@@ -49,7 +49,7 @@ public class ClientUserApi extends AbstractClientApi {
                         .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
-                        .onStatus(HttpStatus::isError, this::onError)
+                        .onStatus((HttpStatusCode::isError), this::onError)
                         .bodyToMono(new ParameterizedTypeReference<>() {
                         }));
     }
@@ -63,7 +63,7 @@ public class ClientUserApi extends AbstractClientApi {
                         .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
-                        .onStatus(HttpStatus::isError, this::onError)
+                        .onStatus((HttpStatusCode::isError), this::onError)
                         .bodyToMono(User.class));
     }
 
@@ -79,7 +79,7 @@ public class ClientUserApi extends AbstractClientApi {
                         .bodyValue(name)
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
-                        .onStatus(HttpStatus::isError, this::onError)
+                        .onStatus((HttpStatusCode::isError), this::onError)
                         .bodyToMono(Void.class));
     }
 

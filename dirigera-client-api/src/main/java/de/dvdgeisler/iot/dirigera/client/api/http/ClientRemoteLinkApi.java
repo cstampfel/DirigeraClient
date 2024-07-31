@@ -3,7 +3,7 @@ package de.dvdgeisler.iot.dirigera.client.api.http;
 import de.dvdgeisler.iot.dirigera.client.api.model.RemoteLink;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
@@ -34,7 +34,7 @@ public class ClientRemoteLinkApi extends AbstractClientApi {
                         .bodyValue(remoteLink)
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
-                        .onStatus(HttpStatus::isError, this::onError)
+                        .onStatus((HttpStatusCode::isError), this::onError)
                         .bodyToMono(Void.class));
     }
 }

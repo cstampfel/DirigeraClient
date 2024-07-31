@@ -7,6 +7,7 @@ import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -46,13 +47,14 @@ public abstract class AbstractClientApi {
 
 
     protected Mono<? extends Throwable> onError(final ClientResponse clientResponse) {
-        if (clientResponse.rawStatusCode() == 404)
+        if (clientResponse.statusCode().isSameCodeAs(HttpStatusCode.valueOf(404))) {
             return clientResponse
                     .bodyToMono(String.class)
                     .map(Jsoup::parse)
                     .map(Document::body)
                     .map(Element::text)
                     .map(RequestException::new);
+        }
         return clientResponse
                 .bodyToMono(Error.class)
                 .map(RequestException::new);

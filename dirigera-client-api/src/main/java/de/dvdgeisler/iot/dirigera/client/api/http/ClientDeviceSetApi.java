@@ -4,7 +4,7 @@ import de.dvdgeisler.iot.dirigera.client.api.model.Identifier;
 import de.dvdgeisler.iot.dirigera.client.api.model.deviceset.DeviceSetAttributes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserters;
@@ -39,7 +39,7 @@ public class ClientDeviceSetApi extends AbstractClientApi {
                                 .with("icon", icon))
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
-                        .onStatus(HttpStatus::isError, this::onError)
+                        .onStatus((HttpStatusCode::isError), this::onError)
                         .bodyToMono(Identifier.class));
     }
 
@@ -52,7 +52,7 @@ public class ClientDeviceSetApi extends AbstractClientApi {
                         .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
-                        .onStatus(HttpStatus::isError, this::onError)
+                        .onStatus((HttpStatusCode::isError), this::onError)
                         .bodyToMono(Void.class));
     }
 
@@ -67,7 +67,7 @@ public class ClientDeviceSetApi extends AbstractClientApi {
                         .bodyValue(attributes)
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
-                        .onStatus(HttpStatus::isError, this::onError)
+                        .onStatus((HttpStatusCode::isError), this::onError)
                         .bodyToMono(Void.class));
     }
 

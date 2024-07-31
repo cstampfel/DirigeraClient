@@ -8,7 +8,7 @@
     <description>Provides API usage examples</description>
     <packaging>jar</packaging>
     <properties>
-        <java.version>17</java.version>
+        <java.version>22</java.version>
     </properties>
     <parent>
         <groupId>de.dvdgeisler.iot.dirigera</groupId>

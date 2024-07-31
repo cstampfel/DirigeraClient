@@ -4,7 +4,7 @@ import de.dvdgeisler.iot.dirigera.client.api.model.StepAttributes;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
@@ -35,7 +35,7 @@ public class ClientStepApi extends AbstractClientApi {
                         .bodyValue(attributes)
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
-                        .onStatus(HttpStatus::isError, this::onError)
+                        .onStatus((HttpStatusCode::isError), this::onError)
                         .bodyToMono(Void.class));
     }
 }

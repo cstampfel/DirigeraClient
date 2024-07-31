@@ -5,7 +5,7 @@ import de.dvdgeisler.iot.dirigera.client.api.model.auth.Token;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserters;
@@ -84,7 +84,7 @@ public class ClientOAuthApi extends AbstractClientApi {
                                 .queryParam("code_challenge_method", CHALLENGE_METHOD).build())
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
-                        .onStatus(HttpStatus::isError, this::onError)
+                        .onStatus((HttpStatusCode::isError), this::onError)
                         .bodyToMono(Authorize.class));
     }
 
@@ -99,7 +99,7 @@ public class ClientOAuthApi extends AbstractClientApi {
                                 .with("code_verifier", codeVerifier))
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
-                        .onStatus(HttpStatus::isError, this::onError)
+                        .onStatus((HttpStatusCode::isError), this::onError)
                         .bodyToMono(Void.class));
     }
 
@@ -116,7 +116,7 @@ public class ClientOAuthApi extends AbstractClientApi {
                                 .with("grant_type", "authorization_code"))
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
-                        .onStatus(HttpStatus::isError, this::onError)
+                        .onStatus((HttpStatusCode::isError), this::onError)
                         .bodyToMono(Token.class)
                         .doOnSuccess(this.tokenStore::setAccessToken));
     }
@@ -132,7 +132,7 @@ public class ClientOAuthApi extends AbstractClientApi {
                         .headers(this.tokenStore::setBearerAuth)
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
-                        .onStatus(HttpStatus::isError, this::onError)
+                        .onStatus((HttpStatusCode::isError), this::onError)
                         .bodyToMono(Map.class));
     }
 
@@ -154,7 +154,7 @@ public class ClientOAuthApi extends AbstractClientApi {
                         .body(BodyInserters.fromFormData("refresh_token", token))
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
-                        .onStatus(HttpStatus::isError, this::onError)
+                        .onStatus((HttpStatusCode::isError), this::onError)
                         .bodyToMono(Token.class)
                         .doOnSuccess(ClientOAuthApi.this.tokenStore::setAccessToken));
     }
